@@ -11,7 +11,7 @@ public class MoveComponent : MonoBehaviour
     private float _angleZ = 0.0f;
 
     private float _xDistance = 0.0f;
-    private float _yDistance = 0.0f;
+    //private float _yDistance = 0.0f;
     private float _zDistance = 0.0f;
 
     void Start()
