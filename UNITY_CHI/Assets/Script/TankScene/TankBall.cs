@@ -14,6 +14,11 @@ public class TankBall : MonoBehaviour
         _lifeTime = 0.0f;
     }
 
+    private void OnEnable()
+    {
+        _lifeTime = 0.0f;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +26,6 @@ public class TankBall : MonoBehaviour
 
         if (_lifeTime >= 3.0f)
         {
-            _lifeTime = 0.0f;
             gameObject.SetActive(false);
         }
 
@@ -31,5 +35,6 @@ public class TankBall : MonoBehaviour
     public void SetDirection(Vector3 dir)
     {
         _direction = dir;
+        transform.localRotation = Quaternion.LookRotation(dir);
     }
 }

@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Tank : MonoBehaviour
 {
-    private List<GameObject> _ballList;
+    public List<GameObject> _ballList;
     private GameObject _ball;
     private Transform _muzzle;
     private Transform _head;
 
     public float _speed = 5.0f;
+
+    private void Awake()
+    {
+        Debug.Log("Awake");
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("OnEnable");
+    }
     void Start()
     {
+        Debug.Log("Start");
         // 프리팹 가져오기
         // 무조건 Resources 폴더 안에 있는 오브젝트를 가져올 수 있다.
         _ball = Resources.Load<GameObject>($"Prefabs/Ball");
@@ -26,6 +37,12 @@ public class Tank : MonoBehaviour
             Debug.Log("Head를 못 찾았습니다.");
 
         _ballList = GameObject.Find("ObjectPool").GetComponent<ObjectPool>().GetList();
+
+        if (GameObject.Find("ObjectPool") == null)
+            Debug.Log("ObjectPool 못찾음");
+
+        if (_ballList.Count == 0)
+            Debug.Log("ballList를 못찾음");
     }
 
     // Update is called once per frame
@@ -70,16 +87,13 @@ public class Tank : MonoBehaviour
             // world : world 기준
 
             // Instantiate : 게임오브젝트를 복사해서 Clone을 만들고 월드에 등장시키는 함수
-            for (int i = 0; i < 30; i++)
-            {
-                if (_ballList[i].activeSelf == false)
-                {
-                    _ballList[i].SetActive(true);
-                    _ballList[i].transform.position = _muzzle.position;
-                    _ballList[i].GetComponent<TankBall>().SetDirection(_head.transform.TransformDirection(Vector3.forward));
 
-                    return;
-                }
+            GameObject ball = _ballList.Find(ball => ball.activeSelf == false);
+            if (ball != null)
+            {
+                ball.SetActive(true);
+                ball.transform.position = _muzzle.position;
+                ball.GetComponent<TankBall>().SetDirection(_head.transform.TransformDirection(Vector3.forward));
             }
         }
     }

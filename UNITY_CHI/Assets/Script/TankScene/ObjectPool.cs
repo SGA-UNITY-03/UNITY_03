@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
     public List<GameObject> _ballList;
     GameObject _ballOrigin;
 
-    void Start()
+    void Awake()
     {
         _ballOrigin = Resources.Load<GameObject>($"Prefabs/Ball");
 
