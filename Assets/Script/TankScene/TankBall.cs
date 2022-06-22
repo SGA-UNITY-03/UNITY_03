@@ -35,6 +35,6 @@ public class TankBall : MonoBehaviour
     public void SetDirection(Vector3 dir)
     {
         _direction = dir;
-        transform.localRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.LookRotation(dir);
     }
 }

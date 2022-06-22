@@ -13,16 +13,13 @@ public class Tank : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awake");
     }
 
     private void OnEnable()
     {
-        Debug.Log("OnEnable");
     }
     void Start()
     {
-        Debug.Log("Start");
         // 프리팹 가져오기
         // 무조건 Resources 폴더 안에 있는 오브젝트를 가져올 수 있다.
         _ball = Resources.Load<GameObject>($"Prefabs/Ball");
