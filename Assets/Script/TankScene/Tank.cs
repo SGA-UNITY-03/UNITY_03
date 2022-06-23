@@ -9,6 +9,9 @@ public class Tank : MonoBehaviour
     private Transform _muzzle;
     private Transform _head;
 
+    private Transform _camera;
+    private Transform _virtualCameraTransform;
+
     public float _speed = 5.0f;
 
     private void Awake()
@@ -40,6 +43,14 @@ public class Tank : MonoBehaviour
 
         if (_ballList.Count == 0)
             Debug.Log("ballList를 못찾음");
+
+        _camera = GameObject.Find("Main Camera").GetComponent<Transform>();
+        if (_camera == null)
+            Debug.Log("카메라 못찾음");
+
+        _virtualCameraTransform = transform.Find("CameraPos");
+        if (_virtualCameraTransform == null)
+            Debug.Log("카메라Pos 못찾음");
     }
 
     // Update is called once per frame
@@ -47,6 +58,8 @@ public class Tank : MonoBehaviour
     {
         Move();
         Fire();
+        MoveCamera();
+        RayCast();
     }
     private void Move()
     {
@@ -93,5 +106,23 @@ public class Tank : MonoBehaviour
                 ball.GetComponent<TankBall>().SetDirection(_head.transform.TransformDirection(Vector3.forward));
             }
         }
+    }
+
+    private void MoveCamera()
+    {
+        ////_cameara
+        //_cameara.position = _virtualCameraTransform.position;
+        //_cameara.rotation = _virtualCameraTransform.rotation;
+    }
+
+    private void RayCast()
+    {
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10, Color.red);
+
+        RaycastHit hit;
+        LayerMask layerTank = (1 << 6);
+        LayerMask layerPlane = (1 << 7);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 10, out hit, 10, layerTank | layerPlane))
+            Debug.Log(hit.transform.name);
     }
 }
