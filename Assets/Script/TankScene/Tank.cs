@@ -60,6 +60,7 @@ public class Tank : MonoBehaviour
         Fire();
         MoveCamera();
         RayCast();
+        Move2();
     }
     private void Move()
     {
@@ -120,9 +121,35 @@ public class Tank : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10, Color.red);
 
         RaycastHit hit;
-        LayerMask layerTank = (1 << 6);
-        LayerMask layerPlane = (1 << 7);
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 10, out hit, 10, layerTank | layerPlane))
+        LayerMask layerMask = LayerMask.GetMask("Tank") | LayerMask.GetMask("Plane");
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 10, out hit, 10, layerMask))
             Debug.Log(hit.transform.name);
+    }
+
+    private void Move2()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            //Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+            //Vector3 dir = mousePos - Camera.main.transform.position;
+            //dir.Normalize();
+            Debug.DrawRay(Camera.main.transform.position, ray.direction * 100, Color.red);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                //Debug.Log(hit.transform.name);
+                if (hit.transform.tag == "Plane")
+                {
+                    Vector3 rayHitPostion = hit.point;
+                    Debug.Log(rayHitPostion);
+                }
+            }
+            //Vector3 dir = new Vector3(Camera.main.Scre)
+            //Debug.DrawRay(Camera.main.transform.position, )
+        }
     }
 }
