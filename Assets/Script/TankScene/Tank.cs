@@ -120,10 +120,10 @@ public class Tank : MonoBehaviour
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10, Color.red);
 
-        RaycastHit hit;
-        LayerMask layerMask = LayerMask.GetMask("Tank") | LayerMask.GetMask("Plane");
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 10, out hit, 10, layerMask))
-            Debug.Log(hit.transform.name);
+        //RaycastHit hit;
+        //LayerMask layerMask = LayerMask.GetMask("Tank") | LayerMask.GetMask("Plane");
+        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 10, out hit, 10, layerMask))
+        //    Debug.Log(hit.transform.name);
     }
 
     private void Move2()
@@ -138,18 +138,24 @@ public class Tank : MonoBehaviour
             Debug.DrawRay(Camera.main.transform.position, ray.direction * 100, Color.red);
 
             RaycastHit hit;
+            Vector3 rayHitPostion = new Vector3();
+            LayerMask layerMask = LayerMask.GetMask("Plane");
 
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, 100, layerMask))
             {
-                //Debug.Log(hit.transform.name);
-                if (hit.transform.tag == "Plane")
-                {
-                    Vector3 rayHitPostion = hit.point;
-                    Debug.Log(rayHitPostion);
-                }
+                rayHitPostion = hit.point;
+                Debug.Log(hit.transform.name);
             }
-            //Vector3 dir = new Vector3(Camera.main.Scre)
-            //Debug.DrawRay(Camera.main.transform.position, )
+
+            rayHitPostion.y = transform.position.y;
+            //Debug.Log(rayHitPostion);
+
+            Vector3 directionToHit = rayHitPostion - transform.position; // 방향
+            directionToHit.Normalize(); // 방향으로의 단위 벡터
+            transform.position += directionToHit * _speed * Time.deltaTime;
+
+            transform.rotation = 
+                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(directionToHit), 5.0f * Time.deltaTime);
         }
     }
 }

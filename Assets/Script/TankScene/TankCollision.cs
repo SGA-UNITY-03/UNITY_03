@@ -20,6 +20,17 @@ public class TankCollision : MonoBehaviour
     {
         if (_hp <= 0.0f)
             gameObject.SetActive(false);
+
+        Collider[] cols = Physics.OverlapSphere(transform.position, 10.0f);
+
+        foreach (Collider col in cols)
+        {
+            if (col.tag == "Tank")
+            {
+                Debug.LogError("Ã£¾Ò´Ù!");
+            }
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - TankBall
   - Plane
+  - AITankDetect
+  - EnemyTank
+  - Tank
   layers:
   - Default
   - TransparentFX
