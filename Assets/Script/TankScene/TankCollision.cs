@@ -21,15 +21,15 @@ public class TankCollision : MonoBehaviour
         if (_hp <= 0.0f)
             gameObject.SetActive(false);
 
-        Collider[] cols = Physics.OverlapSphere(transform.position, 10.0f);
+        //Collider[] cols = Physics.OverlapSphere(transform.position, 10.0f);
 
-        foreach (Collider col in cols)
-        {
-            if (col.tag == "Tank")
-            {
-                Debug.LogError("찾았다!");
-            }
-        }
+        //foreach (Collider col in cols)
+        //{
+        //    if (col.tag == "Tank")
+        //    {
+        //        Debug.LogError("찾았다!");
+        //    }
+        //}
 
     }
 

@@ -6,15 +6,25 @@ public class Movement : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5.0f;
-    private float _springArm = 8.0f;
     Vector3 rayHitPostion = Vector3.zero;
 
-    Vector3 mineToCamera = Vector3.zero;
+    private bool _isMove = false;
+
+    enum State
+    {
+        IS_MOVE,
+        IS_WAIT,
+        IS_DEAD,
+        IS_SKILL
+    }
+
+    private float _ratio = 0.0f;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        mineToCamera = Camera.main.transform.position - transform.position;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -22,7 +32,21 @@ public class Movement : MonoBehaviour
     {
         //Move();
         Move2();
-        CameraMove();
+
+        anim.Play("RUN");
+
+        if (_isMove)
+        {
+            _ratio = Mathf.Lerp(_ratio, 1, 10 * Time.deltaTime);
+
+            anim.SetFloat("wait_run_ratio", _ratio);
+        }
+        else
+        {
+            _ratio = Mathf.Lerp(_ratio, 0, 10 * Time.deltaTime);
+
+            anim.SetFloat("wait_run_ratio", _ratio);
+        }
     }
 
     private void Move()
@@ -53,14 +77,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void CameraMove()
-    {
-
-        mineToCamera.Normalize();
-
-        Camera.main.transform.position = transform.position + mineToCamera * _springArm;
-    }
-
     private void Move2()
     {
         // 카메라부터 Plaen에 레이저 쏴서 처음 부딫히는 위치 찾기
@@ -86,9 +102,13 @@ public class Movement : MonoBehaviour
         Vector3 dir = directionToHit.normalized; // 방향으로의 단위 벡터
 
         if (directionToHit.magnitude < 0.01f)
+        {
+            _isMove = false;
             return;
+        }
 
         transform.position += dir * _speed * Time.deltaTime;
+        _isMove = true;
 
         transform.rotation =
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
