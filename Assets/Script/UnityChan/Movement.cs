@@ -33,19 +33,13 @@ public class Movement : MonoBehaviour
         //Move();
         Move2();
 
-        anim.Play("RUN");
-
         if (_isMove)
         {
-            _ratio = Mathf.Lerp(_ratio, 1, 10 * Time.deltaTime);
-
-            anim.SetFloat("wait_run_ratio", _ratio);
+            anim.SetFloat("Speed", _speed);
         }
         else
         {
-            _ratio = Mathf.Lerp(_ratio, 0, 10 * Time.deltaTime);
-
-            anim.SetFloat("wait_run_ratio", _ratio);
+            anim.SetFloat("Speed", 0);
         }
     }
 
