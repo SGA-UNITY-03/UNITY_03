@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ButtonDownTest : MonoBehaviour
 {
     public Text _UItext;
+    public TMP_Text _tmpText;
     int _score = 0;
 
     private void Start()
@@ -17,6 +18,6 @@ public class ButtonDownTest : MonoBehaviour
     {
         Debug.Log("마우스 버튼이 눌렸습니다!");
         _score++;
-        _UItext.text = $"점수 : {_score}";
+        _tmpText.text = $"Score : {_score}";
     }
 }
