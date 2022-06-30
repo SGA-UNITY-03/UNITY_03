@@ -41,6 +41,8 @@ public class Movement : MonoBehaviour
         {
             anim.SetFloat("Speed", 0);
         }
+
+        Jump();
     }
 
     private void Move()
@@ -106,5 +108,18 @@ public class Movement : MonoBehaviour
 
         transform.rotation =
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
+    }
+
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetBool("IsJump", true);
+        }
+    }
+
+    public void JumpDown()
+    {
+        anim.SetBool("IsJump", false);
     }
 }
