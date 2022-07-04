@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Movement : MonoBehaviour
 {
@@ -24,15 +25,18 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InputManager input = Managers.Input;
+        input.KeyAction -= Move; // 오류 방지 코드
+        input.KeyAction += Move;
+        input.MouseAction -= Move2;
+        input.MouseAction += Move2;
+
         anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Move();
-        Move2();
-
         if (_isMove)
         {
             anim.SetFloat("Speed", _speed);
@@ -52,44 +56,51 @@ public class Movement : MonoBehaviour
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
             this.GetComponent<Transform>().rotation = q;
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+            _isMove = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
             transform.rotation = q;
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+            _isMove = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
             transform.rotation = q;
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+            _isMove = true;
         }
         if (Input.GetKey(KeyCode.D))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
             transform.rotation = q;
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+            _isMove = true;
         }
+
+        //if (Input.anyKey)
+        //    _isMove = false;
     }
 
-    private void Move2()
+    private void Move2(Define.MouseEvent evt)
     {
-        // 카메라부터 Plaen에 레이저 쏴서 처음 부딫히는 위치 찾기
-        if (Input.GetMouseButton(1))
+        // UI에 마우스가 올라와있으면 리턴
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100, Color.red);
+
+        RaycastHit hit;
+
+        LayerMask layerMask = LayerMask.GetMask("Plane");
+
+        if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(Camera.main.transform.position, ray.direction * 100, Color.red);
-
-            RaycastHit hit;
-
-            LayerMask layerMask = LayerMask.GetMask("Plane");
-
-            if (Physics.Raycast(ray, out hit, 100, layerMask))
-            {
-                rayHitPostion = hit.point;
-                Debug.Log(hit.transform.name);
-            }
+            rayHitPostion = hit.point;
+            Debug.Log(hit.transform.name);
         }
 
         // 캐릭터로 부터 레이저 포인트 위치를 빼면 => 나에서부터 레이저찍힌 위치까지의 방향
@@ -110,12 +121,17 @@ public class Movement : MonoBehaviour
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
     }
 
-    private void Jump()
+    public void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetBool("IsJump", true);
         }
+    }
+
+    public void ButtonJump()
+    {
+        anim.SetBool("IsJump", true);
     }
 
     public void JumpDown()
