@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5.0f;
-    Vector3 rayHitPostion = Vector3.zero;
+    Vector3 _rayHitPostion = Vector3.zero;
 
     private bool _isMove = false;
 
@@ -22,21 +22,41 @@ public class Movement : MonoBehaviour
     private float _ratio = 0.0f;
     private Animator anim;
 
-    // Start is called before the first frame update
     void Start()
     {
         InputManager input = Managers.Input;
-        input.KeyAction -= Move; // 오류 방지 코드
-        input.KeyAction += Move;
-        input.MouseAction -= Move2;
-        input.MouseAction += Move2;
+        input.KeyAction -= OnKeyBoard;
+        input.KeyAction += OnKeyBoard;
+        input.MouseAction -= OnClick;
+        input.MouseAction += OnClick;
 
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    void MouseMove()
+    {
+        _rayHitPostion.y = transform.position.y;
+        Vector3 directionToHit = _rayHitPostion - transform.position;
+        Vector3 dir = directionToHit.normalized;
+
+        if (directionToHit.magnitude < 0.01f)
+        {
+            _isMove = false;
+        }
+        else
+        {
+            transform.position += dir * _speed * Time.deltaTime;
+            _isMove = true;
+
+            transform.rotation =
+                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
+        }
+    }
+
     void Update()
     {
+        MouseMove();
+
         if (_isMove)
         {
             anim.SetFloat("Speed", _speed);
@@ -49,7 +69,7 @@ public class Movement : MonoBehaviour
         Jump();
     }
 
-    private void Move()
+    private void OnKeyBoard()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -84,9 +104,8 @@ public class Movement : MonoBehaviour
         //    _isMove = false;
     }
 
-    private void Move2(Define.MouseEvent evt)
+    private void OnClick(Define.MouseEvent evt)
     {
-        // UI에 마우스가 올라와있으면 리턴
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -99,26 +118,9 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
-            rayHitPostion = hit.point;
+            _rayHitPostion = hit.point;
             Debug.Log(hit.transform.name);
         }
-
-        // 캐릭터로 부터 레이저 포인트 위치를 빼면 => 나에서부터 레이저찍힌 위치까지의 방향
-        rayHitPostion.y = transform.position.y; // y의 값은 캐릭터의 y값과 일치
-        Vector3 directionToHit = rayHitPostion - transform.position; // 방향
-        Vector3 dir = directionToHit.normalized; // 방향으로의 단위 벡터
-
-        if (directionToHit.magnitude < 0.01f)
-        {
-            _isMove = false;
-            return;
-        }
-
-        transform.position += dir * _speed * Time.deltaTime;
-        _isMove = true;
-
-        transform.rotation =
-            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
     }
 
     public void Jump()

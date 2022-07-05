@@ -8,16 +8,16 @@ public class Managers : MonoBehaviour
     public static Managers Instance { get { Init(); return _instance; } }
 
     InputManager _input = new InputManager();
+    ResourceManager _resource = new ResourceManager();
 
     public static InputManager Input { get { return Instance._input; } }
+    public static ResourceManager Resource { get { return Instance._resource; } }
 
-    // Start is called before the first frame update
     void Start()
     {
         Init();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _input.OnUpdate();
@@ -35,7 +35,6 @@ public class Managers : MonoBehaviour
                 go.AddComponent<Managers>();
             }
 
-            // 씬이 바뀌어도 안사라지게
             DontDestroyOnLoad(go);
             _instance = go.GetComponent<Managers>();
         }
