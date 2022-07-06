@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
+        Resource.Instantiate("UnityChan/UI");
     }
 
     void Update()
