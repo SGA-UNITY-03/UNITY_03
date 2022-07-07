@@ -31,6 +31,8 @@ public class Movement : MonoBehaviour
         input.MouseAction += OnClick;
 
         anim = GetComponent<Animator>();
+
+        _rayHitPostion = transform.position;
     }
 
     void MouseMove()
@@ -106,8 +108,6 @@ public class Movement : MonoBehaviour
 
     private void OnClick(Define.MouseEvent evt)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100, Color.red);
@@ -119,7 +119,6 @@ public class Movement : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             _rayHitPostion = hit.point;
-            Debug.Log(hit.transform.name);
         }
     }
 
