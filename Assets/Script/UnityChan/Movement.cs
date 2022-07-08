@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public class Movement : MonoBehaviour
@@ -10,6 +11,7 @@ public class Movement : MonoBehaviour
     Vector3 _rayHitPostion = Vector3.zero;
 
     private bool _isMove = false;
+    private CapsuleCollider _capsuleCol;
 
     enum State
     {
@@ -20,7 +22,7 @@ public class Movement : MonoBehaviour
     }
 
     private float _ratio = 0.0f;
-    private Animator anim;
+    private Animator _anim;
 
     void Start()
     {
@@ -30,24 +32,36 @@ public class Movement : MonoBehaviour
         input.MouseAction -= OnClick;
         input.MouseAction += OnClick;
 
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
+        _capsuleCol = GetComponent<CapsuleCollider>();
 
         _rayHitPostion = transform.position;
     }
 
     void MouseMove()
     {
-        _rayHitPostion.y = transform.position.y;
+        //_rayHitPostion.y = transform.position.y;
         Vector3 directionToHit = _rayHitPostion - transform.position;
         Vector3 dir = directionToHit.normalized;
 
-        if (directionToHit.magnitude < 0.01f)
+        Vector3 orginPos = transform.position;
+        orginPos += _capsuleCol.center;
+        Debug.DrawRay(orginPos, dir * 1.2f, Color.red);
+        if (Physics.Raycast(orginPos, dir, 1.2f, LayerMask.GetMask("Block")))
+        {
+            _isMove = false;
+            return;
+        }
+
+        if (directionToHit.magnitude < 0.1f)
         {
             _isMove = false;
         }
         else
         {
-            transform.position += dir * _speed * Time.deltaTime;
+            NavMeshAgent agent = GetComponent<NavMeshAgent>();
+            agent.Move(dir * _speed * Time.deltaTime);
+            //transform.position += dir * _speed * Time.deltaTime;
             _isMove = true;
 
             transform.rotation =
@@ -61,11 +75,11 @@ public class Movement : MonoBehaviour
 
         if (_isMove)
         {
-            anim.SetFloat("Speed", _speed);
+            _anim.SetFloat("Speed", _speed);
         }
         else
         {
-            anim.SetFloat("Speed", 0);
+            _anim.SetFloat("Speed", 0);
         }
 
         Jump();
@@ -126,17 +140,17 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetBool("IsJump", true);
+            _anim.SetBool("IsJump", true);
         }
     }
 
     public void ButtonJump()
     {
-        anim.SetBool("IsJump", true);
+        _anim.SetBool("IsJump", true);
     }
 
     public void JumpDown()
     {
-        anim.SetBool("IsJump", false);
+        _anim.SetBool("IsJump", false);
     }
 }
