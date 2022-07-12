@@ -4,28 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class Movement : MonoBehaviour
+public class PlayerControll : BaseControll
 {
-    [SerializeField]
-    private float _speed = 5.0f;
-    Vector3 _rayHitPostion = Vector3.zero;
-
-    private bool _isMove = false;
-    private CapsuleCollider _capsuleCol;
-
-    enum State
-    {
-        IS_MOVE,
-        IS_WAIT,
-        IS_DEAD,
-        IS_SKILL
-    }
-
-    private float _ratio = 0.0f;
-    private Animator _anim;
-
     void Start()
     {
+        base.Start();
+
         InputManager input = Managers.Input;
         input.KeyAction -= OnKeyBoard;
         input.KeyAction += OnKeyBoard;
@@ -35,11 +19,6 @@ public class Movement : MonoBehaviour
         input.KeyAction += Attack;
         input.KeyAction -= Jump;
         input.KeyAction += Jump;
-
-        _anim = GetComponent<Animator>();
-        _capsuleCol = GetComponent<CapsuleCollider>();
-
-        _rayHitPostion = transform.position;
     }
 
     void MouseMove()
@@ -75,7 +54,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        MouseMove();
+        base.Update();
 
         if (_isMove)
         {
@@ -85,6 +64,8 @@ public class Movement : MonoBehaviour
         {
             _anim.SetFloat("Speed", 0);
         }
+
+        MouseMove();
     }
 
     private void OnKeyBoard()
