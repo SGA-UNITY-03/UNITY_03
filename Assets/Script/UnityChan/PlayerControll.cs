@@ -6,7 +6,12 @@ using UnityEngine.EventSystems;
 
 public class PlayerControll : BaseControll
 {
-    void Start()
+    public GameObject _hpBar;
+    public Dictionary<string, GameObject> _swordTable;
+
+    private GameObject curSword;
+
+    protected override void Start()
     {
         base.Start();
 
@@ -19,6 +24,19 @@ public class PlayerControll : BaseControll
         input.KeyAction += Attack;
         input.KeyAction -= Jump;
         input.KeyAction += Jump;
+
+        _swordTable = new Dictionary<string, GameObject>();
+        GameObject[] swords = GameObject.FindGameObjectsWithTag("PlayerWeapon");
+        
+        foreach(GameObject go in swords)
+        {
+            _swordTable[go.name] = go;
+            go.GetComponent<Collider>().enabled = false;
+            go.SetActive(false);
+        }
+
+        _swordTable["sword_epic"].SetActive(true);
+        curSword = _swordTable["sword_epic"];
     }
 
     void MouseMove()
@@ -52,7 +70,7 @@ public class PlayerControll : BaseControll
         }
     }
 
-    void Update()
+    protected override void Update()
     {
         base.Update();
 
@@ -137,16 +155,29 @@ public class PlayerControll : BaseControll
         _anim.SetBool("IsJump", false);
     }
 
+    public void ChangeSword(string name)
+    {
+        foreach(var pair in _swordTable)
+        {
+            pair.Value.SetActive(false);
+        }
+
+        _swordTable[name].SetActive(true);
+        _swordTable[name].GetComponent<Collider>().enabled = false;
+    }
+
     public void Attack()
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             _anim.SetBool("IsAttack", true);
+            curSword.GetComponent<Collider>().enabled = true;
         }
     }
 
     public void AttackEnd()
     {
         _anim.SetBool("IsAttack", false);
+        curSword.GetComponent<Collider>().enabled = false;
     }
 }

@@ -20,7 +20,7 @@ public class BaseControll : MonoBehaviour
     protected CapsuleCollider _capsuleCol;
     protected Animator _anim;
 
-    protected void Start()
+    protected virtual void Start()
     {
         _anim = GetComponent<Animator>();
         _capsuleCol = GetComponent<CapsuleCollider>();
@@ -28,7 +28,7 @@ public class BaseControll : MonoBehaviour
         _rayHitPostion = transform.position;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
 
     }
