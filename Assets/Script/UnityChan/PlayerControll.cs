@@ -9,15 +9,14 @@ public class PlayerControll : BaseControll
     public GameObject _hpBar;
     public Dictionary<string, GameObject> _swordTable;
 
-    private GameObject curSword;
+    private GameObject _curSword;
+
 
     protected override void Start()
     {
         base.Start();
 
         InputManager input = Managers.Input;
-        input.KeyAction -= OnKeyBoard;
-        input.KeyAction += OnKeyBoard;
         input.MouseAction -= OnClick;
         input.MouseAction += OnClick;
         input.KeyAction -= Attack;
@@ -36,89 +35,126 @@ public class PlayerControll : BaseControll
         }
 
         _swordTable["sword_epic"].SetActive(true);
-        curSword = _swordTable["sword_epic"];
+        _curSword = _swordTable["sword_epic"];
     }
 
-    void MouseMove()
-    {
-        //_rayHitPostion.y = transform.position.y;
-        Vector3 directionToHit = _rayHitPostion - transform.position;
-        Vector3 dir = directionToHit.normalized;
-
-        Vector3 orginPos = transform.position;
-        orginPos += _capsuleCol.center;
-        Debug.DrawRay(orginPos, dir * 1.2f, Color.red);
-        if (Physics.Raycast(orginPos, dir, 1.2f, LayerMask.GetMask("Block")))
-        {
-            _isMove = false;
-            return;
-        }
-
-        if (directionToHit.magnitude < 0.1f)
-        {
-            _isMove = false;
-        }
-        else
-        {
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
-            agent.Move(dir * _speed * Time.deltaTime);
-            //transform.position += dir * _speed * Time.deltaTime;
-            _isMove = true;
-
-            transform.rotation =
-                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
-        }
-    }
 
     protected override void Update()
     {
         base.Update();
 
-        if (_isMove)
-        {
-            _anim.SetFloat("Speed", _speed);
-        }
-        else
-        {
-            _anim.SetFloat("Speed", 0);
-        }
-
-        MouseMove();
     }
 
-    private void OnKeyBoard()
+    private bool OnKeyBoard()
     {
+        if (State == Define.State.ATTACK)
+            return false;
+
         if (Input.GetKey(KeyCode.W))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
             this.GetComponent<Transform>().rotation = q;
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                Quaternion qA = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
+                transform.rotation = qA;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Quaternion qD = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                transform.rotation = qD;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
-            _isMove = true;
+            return true;
         }
+
         if (Input.GetKey(KeyCode.S))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
             transform.rotation = q;
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                Quaternion qA = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
+                transform.rotation = qA;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Quaternion qD = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                transform.rotation = qD;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
-            _isMove = true;
+            return true;
         }
+
         if (Input.GetKey(KeyCode.A))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
             transform.rotation = q;
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                Quaternion qA = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+                transform.rotation = qA;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                Quaternion qD = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
+                transform.rotation = qD;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
-            _isMove = true;
+
+            return true;
         }
         if (Input.GetKey(KeyCode.D))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
             transform.rotation = q;
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                Quaternion qA = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+                transform.rotation = qA;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                Quaternion qD = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
+                transform.rotation = qD;
+                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+
+                return true;
+            }
+
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
-            _isMove = true;
+            return true;
         }
 
-        //if (Input.anyKey)
-        //    _isMove = false;
+        return false;
     }
         
     private void OnClick(Define.MouseEvent evt)
@@ -170,14 +206,70 @@ public class PlayerControll : BaseControll
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            _anim.SetBool("IsAttack", true);
-            curSword.GetComponent<Collider>().enabled = true;
+            State = Define.State.ATTACK;
         }
     }
 
     public void AttackEnd()
     {
-        _anim.SetBool("IsAttack", false);
-        curSword.GetComponent<Collider>().enabled = false;
+        State = Define.State.IDLE;
+        _curSword.GetComponent<Collider>().enabled = false;
+    }
+
+    public void WeaponColTrigger()
+    {
+        _curSword.GetComponent<Collider>().enabled = true;
+    }
+
+    private void MouseMove()
+    {
+        //_rayHitPostion.y = transform.position.y;
+        Vector3 directionToHit = _rayHitPostion - transform.position;
+        Vector3 dir = directionToHit.normalized;
+
+        Vector3 orginPos = transform.position;
+        orginPos += _capsuleCol.center;
+        Debug.DrawRay(orginPos, dir * 1.2f, Color.red);
+        if (Physics.Raycast(orginPos, dir, 1.2f, LayerMask.GetMask("Block")))
+        {
+            _isMove = false;
+            return;
+        }
+
+        if (directionToHit.magnitude < 0.1f)
+        {
+            _isMove = false;
+        }
+        else
+        {
+            NavMeshAgent agent = GetComponent<NavMeshAgent>();
+            agent.Move(dir * _speed * Time.deltaTime);
+            //transform.position += dir * _speed * Time.deltaTime;
+            _isMove = true;
+
+            transform.rotation =
+                Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5.0f * Time.deltaTime);
+        }
+    }
+
+    protected override void UpdateMove()
+    {
+        base.UpdateMove();
+
+        if (!OnKeyBoard())
+            State = Define.State.IDLE;
+    }
+
+    protected override void UpdateIdle()
+    {
+        base.UpdateIdle();
+
+        if(OnKeyBoard())
+            State = Define.State.MOVE;
+    }
+
+    protected override void UpdateAttack()
+    {
+        base.UpdateAttack();
     }
 }

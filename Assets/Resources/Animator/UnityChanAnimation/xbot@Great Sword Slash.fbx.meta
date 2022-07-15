@@ -60,7 +60,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.77887785
+      - time: 0.13335398
+        functionName: WeaponColTrigger
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 49b4a777c2ca7e045b4d78e07d4dca3c, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.610561
         functionName: AttackEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49b4a777c2ca7e045b4d78e07d4dca3c, type: 3}
