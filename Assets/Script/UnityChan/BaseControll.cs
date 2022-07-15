@@ -6,7 +6,6 @@ public class BaseControll : MonoBehaviour
 {
     [SerializeField]
     protected float _speed = 5.0f;
-    protected bool _isMoving = false;
     [SerializeField]
     protected Define.State _state = Define.State.IDLE;
 

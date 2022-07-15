@@ -75,7 +75,6 @@ public class PlayerControll : BaseControll
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
             return true;
         }
-
         if (Input.GetKey(KeyCode.S))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
@@ -101,7 +100,6 @@ public class PlayerControll : BaseControll
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
             return true;
         }
-
         if (Input.GetKey(KeyCode.A))
         {
             Quaternion q = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
