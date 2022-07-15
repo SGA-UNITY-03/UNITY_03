@@ -85,11 +85,12 @@ public class MonsterControll : BaseControll
         float x;
         float z;
 
-        x = Random.Range(- 1.0f + _originPos.x, 1.0f + _originPos.x);
-        z = Random.Range(- 1.0f + _originPos.z, 1.0f + _originPos.z);
+        x = Random.Range(- 5.0f + _originPos.x, 5.0f + _originPos.x);
+        z = Random.Range(- 5.0f + _originPos.z, 5.0f + _originPos.z);
 
         _movePos = new Vector3(x, 0.0f, z);
 
+        Debug.Log(_movePos);
         yield return new WaitForSeconds(7.0f);
         StartCoroutine("Co_MonsterAIMove");
     }
@@ -105,14 +106,17 @@ public class MonsterControll : BaseControll
         // 이동하다가 originPos에서 일정거리 이상 멀어지면 return
         // -> 다시 돌아갈 조건
 
-        Vector3 temp = _movePos - _originPos;
+        Vector3 temp = _movePos - transform.position;
 
-        transform.Translate(temp.normalized * Time.deltaTime * 5.0f);
+        // ******************////// 
+        // World 포지션으로 움직여야하기 때문에.
+        transform.Translate((temp.normalized * Time.deltaTime * 5.0f),Space.World);
 
-        if (temp.magnitude > 1.0f)
+        if (temp.magnitude < 0.001f)
+        {
+            Debug.Log("Reach");
             State = Define.State.IDLE;
-
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.position + _movePos),Time.deltaTime);
+        }
     }
 
     protected override void UpdateMove()
