@@ -202,9 +202,13 @@ public class PlayerControll : BaseControll
 
     public void Attack()
     {
+        if (_isAttack)
+            return;
+
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             State = Define.State.ATTACK;
+            _isAttack = true;
         }
     }
 
@@ -212,6 +216,7 @@ public class PlayerControll : BaseControll
     {
         State = Define.State.IDLE;
         _curSword.GetComponent<Collider>().enabled = false;
+        _isAttack = false;
     }
 
     public void WeaponColTrigger()

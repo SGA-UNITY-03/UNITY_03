@@ -7,6 +7,7 @@ public class MonsterControll : BaseControll
 {
     public GameObject _monsterInfo;
     Slider _hpSlider;
+    GameObject _player;
 
     MonsterStat _stat;
 
@@ -14,6 +15,11 @@ public class MonsterControll : BaseControll
     private Vector3 _originPos;
     [SerializeField]
     private float _movingDistance;
+    [SerializeField]
+    private float _detectDistance = 5.0f;
+    [SerializeField]
+    private float _attackRange = 1.0f;
+
 
     protected override void Start()
     {
@@ -35,6 +41,11 @@ public class MonsterControll : BaseControll
         StartCoroutine("Co_MonsterAIMove");
 
         _movingDistance = 5.0f;
+        _detectDistance = 5.0f;
+        _attackRange = 1.0f;
+        _speed = 2.0f;
+
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnEnable()
@@ -81,7 +92,6 @@ public class MonsterControll : BaseControll
 
         State = Define.State.MOVE;
         _isMove = true;
-        Debug.Log("AIMove 호출");
         float x;
         float z;
 
@@ -91,32 +101,69 @@ public class MonsterControll : BaseControll
         _movePos = new Vector3(x, 0.0f, z);
 
         Debug.Log(_movePos);
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(3.0f);
         StartCoroutine("Co_MonsterAIMove");
     }
 
     void RandMove()
     {
-        // TODO: 범위 밖으로 나가지못하게
-
-        // 목표지점 찍고
-        // 목표지점은 originPos에서 rand 범위 값으로 준다.
-
-        // 이동방향
-        // 이동하다가 originPos에서 일정거리 이상 멀어지면 return
-        // -> 다시 돌아갈 조건
+        if (Detect() == true)
+            return;
 
         Vector3 temp = _movePos - transform.position;
 
-        // ******************////// 
-        // World 포지션으로 움직여야하기 때문에.
-        transform.Translate((temp.normalized * Time.deltaTime * 5.0f),Space.World);
-
-        if (temp.magnitude < 0.001f)
+        if (temp.magnitude < 0.1f)
         {
-            Debug.Log("Reach");
+            //Debug.Log("Reach");
             State = Define.State.IDLE;
+
+            return;
         }
+
+        transform.rotation = Quaternion.LookRotation(temp);
+        transform.position += (temp.normalized * Time.deltaTime * 5.0f);
+    }
+
+    bool Detect()
+    {
+        if(_player == null)
+            _player = GameObject.FindGameObjectWithTag("Player");
+
+        float distance = (_player.transform.position - transform.position).magnitude;
+
+        if (distance < _detectDistance)
+        {
+            State = Define.State.MOVE;
+            Follow();
+            return true;
+        }
+
+        return false;
+    }
+
+    void Follow()
+    {
+        if (_player == null)
+            _player = GameObject.FindGameObjectWithTag("Player");
+
+        Vector3 moveVector = _player.transform.position - transform.position;
+
+        if (moveVector.magnitude <= _attackRange)
+        {
+            Attack();
+            return;
+        }
+
+        transform.position += moveVector.normalized * _speed * Time.deltaTime;
+    }
+
+    void Attack()
+    {
+        if (_isAttack)
+            return;
+        
+        State = Define.State.ATTACK;
+        _isAttack = true;
     }
 
     protected override void UpdateMove()
@@ -128,12 +175,13 @@ public class MonsterControll : BaseControll
     protected override void UpdateIdle()
     {
         base.UpdateIdle();
+        Detect();
         _isMove = false;
     }
 
     protected override void UpdateAttack()
     {
         base.UpdateAttack();
-
+        Detect();
     }
 }
