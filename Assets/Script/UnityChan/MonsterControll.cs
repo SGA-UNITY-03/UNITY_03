@@ -18,7 +18,9 @@ public class MonsterControll : BaseControll
     [SerializeField]
     private float _detectDistance = 5.0f;
     [SerializeField]
-    private float _attackRange = 1.0f;
+    private float _attackRange = 2.0f;
+
+    private bool _dectMoving = false;
 
 
     protected override void Start()
@@ -100,21 +102,18 @@ public class MonsterControll : BaseControll
 
         _movePos = new Vector3(x, 0.0f, z);
 
-        Debug.Log(_movePos);
         yield return new WaitForSeconds(3.0f);
         StartCoroutine("Co_MonsterAIMove");
     }
-
     void RandMove()
     {
-        if (Detect() == true)
+        if (_dectMoving == true)
             return;
 
         Vector3 temp = _movePos - transform.position;
 
         if (temp.magnitude < 0.1f)
         {
-            //Debug.Log("Reach");
             State = Define.State.IDLE;
 
             return;
@@ -123,7 +122,6 @@ public class MonsterControll : BaseControll
         transform.rotation = Quaternion.LookRotation(temp);
         transform.position += (temp.normalized * Time.deltaTime * 5.0f);
     }
-
     bool Detect()
     {
         if(_player == null)
@@ -133,28 +131,25 @@ public class MonsterControll : BaseControll
 
         if (distance < _detectDistance)
         {
-            State = Define.State.MOVE;
-            Follow();
+            _dectMoving = true;
             return true;
         }
 
+        _dectMoving = false;
         return false;
     }
 
     void Follow()
     {
+        State = Define.State.MOVE;
+
         if (_player == null)
             _player = GameObject.FindGameObjectWithTag("Player");
 
         Vector3 moveVector = _player.transform.position - transform.position;
 
-        if (moveVector.magnitude <= _attackRange)
-        {
-            Attack();
-            return;
-        }
-
         transform.position += moveVector.normalized * _speed * Time.deltaTime;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveVector), 0.1f);
     }
 
     void Attack()
@@ -164,24 +159,49 @@ public class MonsterControll : BaseControll
         
         State = Define.State.ATTACK;
         _isAttack = true;
+        Debug.Log("Attack");
+
+        return;
+    }
+
+    void AttackEnd()
+    {
+        _isAttack = false;
+        Debug.Log("AttackEnd");
+        State = Define.State.IDLE;
+
+        return;
     }
 
     protected override void UpdateMove()
     {
         base.UpdateMove();
         RandMove();
+        if(Detect() == true)
+        {
+            Follow();
+
+            Vector3 attackCheck = _player.transform.position - transform.position;
+
+            if (attackCheck.magnitude <= _attackRange)
+                State = Define.State.ATTACK;
+            else
+                State = Define.State.MOVE;
+        }
     }
 
     protected override void UpdateIdle()
     {
         base.UpdateIdle();
-        Detect();
-        _isMove = false;
+        if (Detect() == true)
+        {
+            Follow();
+        }
     }
 
     protected override void UpdateAttack()
     {
         base.UpdateAttack();
-        Detect();
+        Attack();
     }
 }

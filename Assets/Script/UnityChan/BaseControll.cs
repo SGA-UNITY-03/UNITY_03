@@ -21,6 +21,9 @@ public class BaseControll : MonoBehaviour
         get { return _state; }
         set
         {
+            if (_state == value)
+                return;
+
             _state = value;
 
             if (_anim == null)
