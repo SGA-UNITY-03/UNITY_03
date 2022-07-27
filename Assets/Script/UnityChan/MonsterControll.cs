@@ -81,7 +81,7 @@ public class MonsterControll : BaseControll
     {
         if(other.tag == "PlayerWeapon")
         {
-            Debug.Log("몬스터 공격당함");
+            Managers.effectManager.PlayEffect("Attack3", other.ClosestPoint(_player.transform.position));
             _stat.Damaged(30);
             _hpSlider.value = _stat.HpRatio();
         }
@@ -159,7 +159,6 @@ public class MonsterControll : BaseControll
         
         State = Define.State.ATTACK;
         _isAttack = true;
-        Debug.Log("Attack");
 
         return;
     }
@@ -167,7 +166,6 @@ public class MonsterControll : BaseControll
     void AttackEnd()
     {
         _isAttack = false;
-        Debug.Log("AttackEnd");
         State = Define.State.IDLE;
 
         return;

@@ -9,9 +9,11 @@ public class Managers : MonoBehaviour
 
     InputManager _input = new InputManager();
     ResourceManager _resource = new ResourceManager();
+    EffectManager _effectManager;
 
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static EffectManager effectManager { get { return Instance._effectManager; } }
 
     void Start()
     {
@@ -22,6 +24,10 @@ public class Managers : MonoBehaviour
             UI_Manager = Resource.Instantiate("UnityChan/UI/UI_Manager");
 
         UI_Manager.transform.SetParent(gameObject.transform);
+
+        _effectManager = GameObject.Find("EffectManager").GetComponent<EffectManager>();
+        if (_effectManager == null)
+            Debug.LogError("Effect Manager를 추가해주세요.");
     }
 
     void Update()
