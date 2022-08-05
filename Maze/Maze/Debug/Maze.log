@@ -1,2 +1,16 @@
-﻿  Maze.cpp
-  Maze.vcxproj -> C:\Users\user\Desktop\220425_UNITY\Maze\Debug\Maze.exe
+﻿  framework.cpp
+  Vector2.cpp
+  Maze.cpp
+  Block.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,23): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Program.cpp
+  MazeScene.cpp
+  PaintScene.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\Scene\PaintScene.cpp(26,45): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\Scene\PaintScene.cpp(26,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
+  코드를 생성하고 있습니다...
+  Maze.vcxproj -> C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Debug\Maze.exe

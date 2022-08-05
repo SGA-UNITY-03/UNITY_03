@@ -23,8 +23,9 @@ void PaintScene::Update()
 void PaintScene::Render(HDC hdc)
 {
     SelectObject(hdc, _brush);
-    Ellipse(hdc, 0, 0, 100, 100);
+    Ellipse(hdc, 0, 0, mousePos._x, mousePos._y);
     Rectangle(hdc, 100, 100, 200, 200);
+
 
     SelectObject(hdc, _pen);
     MoveToEx(hdc, 0, 0, nullptr);

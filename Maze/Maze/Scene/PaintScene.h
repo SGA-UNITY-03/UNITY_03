@@ -13,5 +13,7 @@ public:
 private:
 	HBRUSH _brush;
 	HPEN _pen;
+
+	Vector2 _moveVector = { 300,300 };
 };
 

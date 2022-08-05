@@ -14,9 +14,26 @@
 #include <memory.h>
 #include <tchar.h>
 #include <memory>
+#include <vector>
+#include <map>
+#include <algorithm>
 
 using namespace std;
 
+// Define
+#include "Define.h"
+
+// Math
+#include "Math/Vector2.h"
+
+// MazeObject
+#include "MazeObj/Block.h"
+
+// Scene
 #include "Scene/Scene.h"
 
+// Program
 #include "Program/Program.h"
+
+extern HWND hWnd;
+extern Vector2 mousePos;
