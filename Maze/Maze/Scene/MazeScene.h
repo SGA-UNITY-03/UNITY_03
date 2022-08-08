@@ -10,7 +10,6 @@ public:
 	virtual void Render(HDC hdc) override;
 
 private:
-	//vector<shared_ptr<Block>> _blocks;
-	shared_ptr<Block> _block;
+	shared_ptr<MazeObj> _maze;
 };
 

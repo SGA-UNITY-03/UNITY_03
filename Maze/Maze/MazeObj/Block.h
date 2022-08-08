@@ -9,12 +9,15 @@ public:
 	void Render(HDC hdc);
 
 	void SetPosition(Vector2 pos);
+	void SetType(BlockType type) { _type = type; }
 
 private:
 	Vector2 _pos;
-	Vector2 _size = { 10,10 };
+	Vector2 _size = { 15,15 };
 	
-	HBRUSH _brush;
-	HPEN _pen;
+	HBRUSH _brushes[5];
+	HPEN _pens[5];
+
+	BlockType _type = BlockType::ABLE;
 };
 

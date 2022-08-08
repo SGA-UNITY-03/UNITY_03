@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MazeObj\MazeObj.h" />
     <ClInclude Include="MazeObj\Block.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MazeObj\MazeObj.cpp" />
     <ClCompile Include="MazeObj\Block.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

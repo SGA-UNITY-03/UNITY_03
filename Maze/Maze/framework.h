@@ -13,6 +13,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <time.h>
 #include <memory>
 #include <vector>
 #include <map>
@@ -28,6 +29,7 @@ using namespace std;
 
 // MazeObject
 #include "MazeObj/Block.h"
+#include "MazeObj/MazeObj.h"
 
 // Scene
 #include "Scene/Scene.h"

@@ -12,16 +12,15 @@ MazeScene::~MazeScene()
 
 void MazeScene::Start()
 {
-	_block = make_shared<Block>();
-	_block->SetPosition({ WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f });
+	_maze = make_shared<MazeObj>();
 }
 
 void MazeScene::Update()
 {
-	_block->Update();
+	_maze->Update();
 }
 
 void MazeScene::Render(HDC hdc)
 {
-	_block->Render(hdc);
+	_maze->Render(hdc);
 }

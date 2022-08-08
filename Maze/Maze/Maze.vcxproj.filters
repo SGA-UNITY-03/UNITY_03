@@ -48,6 +48,9 @@
     <ClInclude Include="MazeObj\Block.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MazeObj\MazeObj.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Maze.cpp">
@@ -72,6 +75,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MazeObj\Block.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeObj\MazeObj.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

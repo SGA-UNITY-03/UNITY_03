@@ -27,6 +27,7 @@ Program::~Program()
 
 void Program::Start()
 {
+    srand(static_cast<unsigned int>(time(nullptr)));
     _scene = make_shared<MazeScene>();
 }
 

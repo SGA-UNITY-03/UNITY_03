@@ -1,9 +1,25 @@
-﻿  Block.cpp
-C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,23): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(28,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  framework.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.h(14,68): warning C4244: '인수': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.h(14,51): warning C4244: '인수': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Vector2.cpp
+  Maze.cpp
+  Block.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(61,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(61,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(61,23): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\Block.cpp(61,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MazeObj.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(9,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(11,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(43,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(45,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(56,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\MazeObj\MazeObj.cpp(58,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   Program.cpp
   MazeScene.cpp
+  PaintScene.cpp
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\Scene\PaintScene.cpp(26,45): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Maze\Scene\PaintScene.cpp(26,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
   코드를 생성하고 있습니다...
   Maze.vcxproj -> C:\Users\user\Desktop\220425_UNITY\Unity_git\UNITY_03\Maze\Debug\Maze.exe
