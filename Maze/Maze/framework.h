@@ -30,6 +30,7 @@ using namespace std;
 // MazeObject
 #include "MazeObj/Block.h"
 #include "MazeObj/MazeObj.h"
+#include "MazeObj/Player.h"
 
 // Scene
 #include "Scene/Scene.h"

@@ -18,5 +18,16 @@ enum BlockType
 	DISABLE, // RED
 	PLAYER, // PUPLE
 	END, // WHITE
+	FOOTPRINT,
 	NONE,
+};
+
+enum Dir
+{
+	UP,
+	LEFT,
+	DOWN,
+	RIGHT,
+
+	DIRCOUNT = 4
 };

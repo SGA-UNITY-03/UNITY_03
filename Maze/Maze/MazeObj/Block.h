@@ -10,6 +10,7 @@ public:
 
 	void SetPosition(Vector2 pos);
 	void SetType(BlockType type) { _type = type; }
+	BlockType GetBlockType() { return _type; }
 
 private:
 	Vector2 _pos;

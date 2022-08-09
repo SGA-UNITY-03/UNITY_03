@@ -65,3 +65,18 @@ Vector2& Vector2::operator=(const Vector2& value)
 
     return *this;
 }
+
+bool Vector2::operator==(const Vector2& value)
+{
+    if (_x != value._x)
+        return false;
+    if (_y != value._y)
+        return false;
+
+    return true;
+}
+
+bool Vector2::operator!=(const Vector2& value)
+{
+    return !((*this) == value);
+}

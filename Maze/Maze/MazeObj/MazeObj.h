@@ -24,5 +24,6 @@ private:
 
 	vector<shared_ptr<Block>> _blocks; // 블록 만들기용
 	shared_ptr<Block> _blockMatrix[25][25]; // 만든 후에 보기 편하기 위해 _blockMatrix[3][2]
+	shared_ptr<class Player> _player;
 };
 

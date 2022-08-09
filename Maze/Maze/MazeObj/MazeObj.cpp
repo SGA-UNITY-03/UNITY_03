@@ -18,6 +18,9 @@ MazeObj::MazeObj()
 	}
 
 	CreateMaze();
+
+	_player = make_shared<Player>(make_shared<MazeObj>(*this));
+	_player->SetPos(GetStartPos());
 }
 
 MazeObj::~MazeObj()
@@ -28,6 +31,11 @@ void MazeObj::Update()
 {
 	for (auto& block : _blocks)
 		block->Update();
+
+	_player->Update();
+
+	// 플레이어 위치에 해당하는 블록 색 바꾸기
+	_blockMatrix[(UINT)(_player->GetPos()._x)][(UINT)_player->GetPos()._y]->SetType(BlockType::PLAYER);
 }
 
 void MazeObj::Render(HDC hdc)

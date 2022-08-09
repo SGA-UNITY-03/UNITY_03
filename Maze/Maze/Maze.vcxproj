@@ -156,6 +156,7 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="MazeObj\Player.h" />
     <ClInclude Include="Scene\MazeScene.h" />
     <ClInclude Include="Scene\PaintScene.h" />
     <ClInclude Include="Program\Program.h" />
@@ -174,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="MazeObj\Player.cpp" />
     <ClCompile Include="Scene\MazeScene.cpp" />
     <ClCompile Include="Scene\PaintScene.cpp" />
     <ClCompile Include="Program\Program.cpp" />
