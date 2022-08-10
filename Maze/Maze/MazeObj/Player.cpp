@@ -61,7 +61,7 @@ void Player::Update()
 	if (_pathIndex >= _path.size())
 		return;
 
-	if (_time >= 0.3f)
+	if (_time >= 0.7f)
 	{
 		_time = 0.0f;
 
@@ -71,6 +71,7 @@ void Player::Update()
 		{
 			Vector2 temp = _path[_pathIndex - 1];
 			_maze->GetBlock(temp)->SetType(BlockType::ABLE);
+			_maze->GetBlock(temp)->SetType(BlockType::FOOTPRINT);
 		}
 
 		_pathIndex++;

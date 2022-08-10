@@ -7,13 +7,15 @@ Block::Block()
 	_brushes[1] = CreateSolidBrush(RED);
 	_brushes[2] = CreateSolidBrush(VIOLET);
 	_brushes[3] = CreateSolidBrush(WHITE);
-	_brushes[4] = CreateSolidBrush(RGB(0,0,0));
+	_brushes[4] = CreateSolidBrush(BLUE);
+	_brushes[5] = CreateSolidBrush(RGB(0, 0, 0));
 
 	_pens[0] = CreatePen(PS_SOLID, 1, GREEN);
 	_pens[1] = CreatePen(PS_SOLID, 1, RED);
 	_pens[2] = CreatePen(PS_SOLID, 1, VIOLET);
 	_pens[3] = CreatePen(PS_SOLID, 1, WHITE);
-	_pens[4] = CreatePen(PS_SOLID, 1, RGB(0,0,0));
+	_pens[4] = CreatePen(PS_SOLID, 1, BLUE);
+	_pens[5] = CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
 }
 
 Block::~Block()
@@ -44,9 +46,13 @@ void Block::Render(HDC hdc)
 		SelectObject(hdc, _brushes[3]);
 		SelectObject(hdc, _pens[3]);
 		break;
-	case BlockType::NONE:
+	case BlockType::FOOTPRINT:
 		SelectObject(hdc, _brushes[4]);
 		SelectObject(hdc, _pens[4]);
+		break;
+	case BlockType::NONE:
+		SelectObject(hdc, _brushes[5]);
+		SelectObject(hdc, _pens[5]);
 		break;
 	default:
 		break;
