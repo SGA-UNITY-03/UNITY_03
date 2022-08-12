@@ -49,6 +49,31 @@ Player::Player(shared_ptr<MazeObj> maze)
 			_direction = static_cast<Dir>((_direction + 1) % DIRCOUNT);
 		}
 	}
+
+	// 우수법 개선 : Stack
+	stack<Vector2> s;
+
+	for (int i = 0; i < _path.size() - 1; i++)
+	{
+		if (s.empty() == false && s.top() == _path[i + 1])
+			s.pop();
+		else
+			s.push(_path[i]);
+	}
+	s.push(_path.back());
+
+	vector<Vector2> temp;
+	while (true)
+	{
+		if (s.empty() == true)
+			break;
+		temp.push_back(s.top());
+		s.pop();
+	}
+
+	std::reverse(temp.begin(), temp.end());
+
+	_path.swap(temp);
 }
 
 Player::~Player()
